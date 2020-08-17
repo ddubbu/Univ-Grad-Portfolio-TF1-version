@@ -1,0 +1,67 @@
+file num: test0
+activate insert time : (229, 1137)
+negative insert time : (2146, 2697)
+File was saved in ./generate_data directory.
+file num: test1
+activate insert time : (4485, 5205)
+negative insert time : (2906, 3260)
+File was saved in ./generate_data directory.
+file num: test2
+activate insert time : (6393, 8784)
+negative insert time : (324, 875)
+File was saved in ./generate_data directory.
+file num: test3
+activate insert time : (4332, 5052)
+negative insert time : (452, 858)
+File was saved in ./generate_data directory.
+file num: test4
+activate insert time : (3602, 5180)
+negative insert time : (6319, 6918)
+File was saved in ./generate_data directory.
+file num: test5
+activate insert time : (2099, 3014)
+negative insert time : (3634, 4212)
+File was saved in ./generate_data directory.
+file num: test6
+activate insert time : (5088, 6003)
+negative insert time : (1868, 2222)
+File was saved in ./generate_data directory.
+file num: test7
+activate insert time : (2500, 3415)
+negative insert time : (340, 994)
+File was saved in ./generate_data directory.
+file num: test8
+activate insert time : (3955, 4609)
+negative insert time : (216, 767)
+File was saved in ./generate_data directory.
+file num: test9
+activate insert time : (7467, 8134)
+negative insert time : (9185, 9763)
+File was saved in ./generate_data directory.
+The end of making # of 10 new training audios
+
+========================== AFTER EXTRACTION (PREDICTED)
+test 0 , loss: 0.0044951397
+time:  -34 ~ 1706
+test 1 , loss: 0.002250968
+time:  3987 ~ 5728
+test 2 , loss: 0.0008384764
+time:  6273 ~ 8015
+test 3 , loss: 0.002072052
+time:  3836 ~ 5577
+test 4 , loss: 0.0014843817
+time:  3139 ~ 4881
+test 5 , loss: 0.0013298036
+time:  1955 ~ 3697
+test 6 , loss: 0.001262663
+time:  4944 ~ 6686
+test 7 , loss: 0.004853286
+time:  2356 ~ 4097
+test 8 , loss: 0.002799216
+time:  3847 ~ 5589
+test 9 , loss: 0.006040221
+time:  7376 ~ 9117
+
+85%
+한개는 후반부에 Ac 만 잘림 : 피아노 소리 배경 40%60% 조정해보자
+test0은 음수시간으로 인해 잘린듯? 0으로 치환 ㄱㄱ 

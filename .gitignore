@@ -1,2 +1,10 @@
-data_record/
 .idea
+
+data_record/
+raw_data/
+
+models/train/KWS/generate_data
+models/train/KWS/log
+
+
+
