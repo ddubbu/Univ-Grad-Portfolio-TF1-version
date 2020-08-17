@@ -1,0 +1,6 @@
+model_checkpoint_path: "GRU_model_train_epoch3990"
+all_model_checkpoint_paths: "GRU_model_train_epoch3950"
+all_model_checkpoint_paths: "GRU_model_train_epoch3960"
+all_model_checkpoint_paths: "GRU_model_train_epoch3970"
+all_model_checkpoint_paths: "GRU_model_train_epoch3980"
+all_model_checkpoint_paths: "GRU_model_train_epoch3990"
