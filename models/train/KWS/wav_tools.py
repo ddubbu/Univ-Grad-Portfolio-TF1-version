@@ -7,21 +7,34 @@ import librosa, librosa.display
 
 # Load raw audio files for speech synthesis
 def load_raw_audio():
+    PATH = "C:/0. Git/speech_commands_v0.01"
     activates = []
     backgrounds = []
     negatives = []
-    for filename in os.listdir("./raw_data/activates"):
+    for filename in os.listdir(PATH + "/_stop"):
         if filename.endswith("wav"):
-            activate = AudioSegment.from_wav("./raw_data/activates/"+filename)
+            activate = AudioSegment.from_wav(PATH + "/_stop/"+filename)
             activates.append(activate)
-    for filename in os.listdir("./raw_data/backgrounds"):
+    for filename in os.listdir(PATH + "/_backgrounds"):
         if filename.endswith("wav"):
-            background = AudioSegment.from_wav("./raw_data/backgrounds/"+filename)
+            background = AudioSegment.from_wav(PATH + "/_backgrounds/"+filename)
             backgrounds.append(background)
-    for filename in os.listdir("./raw_data/negatives"):
-        if filename.endswith("wav"):
-            negative = AudioSegment.from_wav("./raw_data/negatives/"+filename)
-            negatives.append(negative)
+
+    ## negative
+    listdir = os.listdir(PATH)[:-3]  # _ 붙은 앞에 3개 버리기
+    number_of_negatives = 100  # 100개 다른 단어 추출
+    random_indices = np.random.randint(len(listdir), size=number_of_negatives)  # 중복될 듯
+    for i in random_indices:
+        select_folder = listdir[i]
+        select_PATH = PATH + "/" + select_folder
+        wave_list = os.listdir(select_PATH)
+        print(select_PATH)
+        select_wave_idx = np.random.randint(len(wave_list), size=1)
+        print(select_wave_idx)
+        select_wave_PATH = select_PATH + "/" + wave_list[select_wave_idx[0]]
+
+        negative = AudioSegment.from_wav(select_wave_PATH)
+        negatives.append(negative)
     return activates, negatives, backgrounds
 
 
@@ -174,11 +187,12 @@ def create_training_example(Ty, backgrounds, activates, negatives, file_name_add
 
 
     # Select 0-2 random negatives audio recordings from the entire list of "negatives" recordings
-    number_of_negatives = 1  # ★★★ 얘도 한개만 넣자. //np.random.randint(0, 3)
+    number_of_negatives = 2  # ★★★ 얘도 한개만 넣자. //np.random.randint(0, 3)
     random_indices = np.random.randint(len(negatives), size=number_of_negatives)
     random_negatives = [negatives[i] for i in random_indices]
 
-    # Step 5: Loop over randomly selected negative clips and insert in background
+
+    # # Step 5: Loop over randomly selected negative clips and insert in background
     for random_negative in random_negatives:
         # Insert the audio clip on the background
         background, n_segment_time = insert_audio_clip(background, random_negative, previous_segments)
