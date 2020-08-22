@@ -303,7 +303,7 @@ def create_training_example(Ty, backgrounds, activates, negatives, file_name_add
     background = match_target_amplitude(background, -20.0)  # ★
 
     # Export new training example
-    file_name = "./generate_data/" + str(file_name_added) + ".wav"
+    file_name = "./models/train/KWS/generate_data/" + str(file_name_added) + ".wav"
     file_handle = background.export(file_name, format="wav")
     print("File was saved in ./generate_data directory.")
 
