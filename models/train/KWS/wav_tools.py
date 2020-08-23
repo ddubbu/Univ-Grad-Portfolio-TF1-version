@@ -275,7 +275,7 @@ def create_training_example(Ty, backgrounds, activates, negatives, file_name_add
 
     print("file num:", file_name_added)
     # Step 1: Initialize y (label vector) of zeros (≈ 1 line)
-    y = np.zeros((1, Ty))
+    y = -np.ones((1, Ty))
 
     # Step 2: Initialize segment times as empty list (≈ 1 line)
     previous_segments = []
