@@ -54,11 +54,11 @@ RNN_output = tf.contrib.layers.fully_connected(inputs=outputs, num_outputs=1  # 
                                             , activation_fn=None, scope="fc_outputs")  # tf.nn.relu 얘가 default 라니..
 
 
-
-loss = tf.nn.sigmoid_cross_entropy_with_logits(logits=RNN_output, labels=Y)
+loss = tf.pow((RNN_output - Y),2)
+# loss = tf.nn.sigmoid_cross_entropy_with_logits(logits=RNN_output, labels=Y)
 loss = tf.reduce_mean(loss, name="MyLoss")
 
-tf.summary.scalar('GRU_1_Tx_1372_lr_0.001_relu', loss)
+tf.summary.scalar('GRU_1_Tx_1372_lr_0.001_dropout0.8_label_negative', loss)
 
 opt = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss, name="MyOpt")
 
