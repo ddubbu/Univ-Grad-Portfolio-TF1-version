@@ -4,6 +4,7 @@ from tensorflow.contrib import layers
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
+import os
 
 def minmax_Batch_size(X):
     minmax_X = []
@@ -99,12 +100,15 @@ total_data = len(X_train)
 
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
-    saver = tf.train.Saver()
+    saver = tf.train.Saver(max_to_keep=300)
     train_writer = tf.summary.FileWriter("./log/", sess.graph)
-    min_cost = 1000
     for epoch in range(training_epochs):
+        # min_cost = 1000
+        epoch_path = './models/GRU_2_layer/epoch'+ str(epoch)
+        os.makedirs(epoch_path, exist_ok = True)
+
         print("============ epoch", epoch, "============")
-        for batch in range(total_data):
+        for batch in range(0, total_data, batch_size):
             # avg_cost = 0
 
             # batch_xs = X_train[batch]  # X_train[batch:batch+1]
@@ -125,16 +129,17 @@ with tf.Session() as sess:
 
             feed_dict = {X: minmax_batch_xs , Y: batch_ys, keep_prob: 0.7}
             # batch 5개 cost_ 주의.
-            cost_, _, h= sess.run([cost, optimizer, hypothesis], feed_dict=feed_dict)
+            cost_, _= sess.run([cost, optimizer], feed_dict=feed_dict)
             # summary merged
             # print(sess.run(batch_ys))
             # print(h)
 
-            print('epoch:', epoch,'data: %04d' % (batch)*batch_size, 'cost = %.9f'%(cost_))
+            print('epoch:', epoch,'data: %04d' % (batch), 'cost = %.9f'%(cost_))
             #train_writer.add_summary(summary, global_step= batch)
-            if (min_cost > cost_):
-                min_cost = cost_
-                saver.save(sess, './models/NN_epoch_%d_data_%d_cost_%.6f_'%(epoch, batch*batch_size, cost_))
+            if (batch % 100 ==0):
+                #min_cost = cost_
+                check_path = epoch_path + "/cost_%.6f_data_num"% (cost_)
+                saver.save(sess, check_path, batch)
 
     print('Learning Finished!')
 
@@ -146,14 +151,18 @@ with tf.Session() as sess:
 
 
 
-    print("label idx: ", end='')
-    print(np.argmax(Y_test, 1))
-    print("predict idx: ", end='')
+
 
     minmax_X_test = minmax_Batch_size(X_test)
 
     minmax_X_test = minmax_X_test[0:5]
+    Y_test = Y_test[0:5]
+
+    print("label idx: ", end='')
+    print(np.argmax(Y_test, 1))
+    print("predict idx: ", end='')
     print(sess.run(tf.argmax(hypothesis, 1), feed_dict={X: minmax_X_test, keep_prob: 1}))
+
 
 
     ## 여러개일 때 유용
