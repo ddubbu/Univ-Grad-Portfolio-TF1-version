@@ -82,11 +82,20 @@ with tf.Session() as sess:
     #
     # tf.summary.scalar('train_loss', loss)
     # merged = tf.summary.merge_all()
+    #
+    # train_avg_losses = np.load("train_loss.npy")
+    # test_avg_losses = np.load("test_loss.npy")
     # ###########################
+
 
 
     sess.run(tf.global_variables_initializer())  # 위에 주석풀면 여긴 주석
     saver = tf.train.Saver()  # 위에 주석풀면 여긴 주석
+    # train loss
+    train_avg_losses = []  # 위에 주석 풀면 여긴 주석
+    test_avg_losses = []  # 위에 주석 풀면 여긴 주석
+    # 위에 주석 풀면, 아래 range(train_epoch) 변경하기
+
 
     # training data train0.npy ~ train19.npy : 2000개 -> 1 epoch
     # test data train20.npy ~ train21.npy : 200 개
@@ -95,13 +104,11 @@ with tf.Session() as sess:
     total_batch_size = 100  # 1
     total_train_data_size = total_batch_size*20
 
-    # train loss
-    train_avg_losses = []
-    test_avg_losses = []
+
 
     log_path = './log/train_{}_epoch_{}/'.format(total_train_data_size, train_epoch)
     os.makedirs(log_path, exist_ok=True)
-    for epoch in range(train_epoch):  #
+    for epoch in range(train_epoch):  # range(종료된 epoch 이후 숫자, train_epoch)
 
         # log_path += str(epoch)
         log_path2 = log_path + 'epoch'+ str(epoch)
@@ -133,6 +140,8 @@ with tf.Session() as sess:
                                                                   Y:Y_data[batch:batch+1],
                                                                   keep_prob:0.8})
                 train_avg_loss += _loss / (total_train_data_size)  # 나중에 어차피 전체 개수로 나눌거 지금 나눠서 더해주자.
+
+                # train_avg_loss += _loss / (total_batch_size)  # 1 epoch 당 100개 잖아 ㅜㅜ
                 # print
                 if(batch % 10 == 0):
                     print("epoch# :", epoch, "train", i*total_batch_size + batch, ", _loss:", _loss)
@@ -162,7 +171,9 @@ with tf.Session() as sess:
                 _loss = sess.run(loss, feed_dict={X: X_test_data[batch:batch + 1],
                                                   Y: Y_test_data[batch:batch + 1],
                                                   keep_prob: 1.0})  # , keep_prob:0.8})
+
                 test_avg_loss += _loss / total_test_data_size
+                # test_avg_loss += _loss / total_batch_size
                 # print("epoch# :", epoch, "test", i * 100 + batch, ", avg_loss:", test_avg_loss)  # (i-1)*100 + batch
 
         test_avg_losses.append(test_avg_loss)

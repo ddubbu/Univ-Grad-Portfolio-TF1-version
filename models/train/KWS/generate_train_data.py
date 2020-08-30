@@ -3,7 +3,7 @@ from wav_tools import *
 Ty = 1723
 
 # make train data
-for i in range(10):  # *.np file
+for i in range(50):  # *.np file
     np_folder_path = './XY_train/train'+str(i)
     create_training_examples(Ty, 100, np_folder_path)
     print("======= %d 개 완료======="%(i*100))
