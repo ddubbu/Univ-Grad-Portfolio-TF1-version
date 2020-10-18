@@ -6,5 +6,5 @@ tensorflow
 GRU 2 layer
 
 # 구현 상황
-KWS 인식률 현저히 낮음
-metric 
+KWS 인식률 현저히 낮음  
+metric 없음
